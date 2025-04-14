@@ -31,7 +31,6 @@
     "react-native-biometrics": "^3.0.1",
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-gesture-handler": "^2.25.0",
-    "react-native-hole-view": "^3.0.0-alpha4",
     "react-native-image-crop-picker": "^0.42.0",
     "react-native-keychain": "^10.0.0",
     "react-native-paper": "^5.13.1",

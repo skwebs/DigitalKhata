@@ -14,7 +14,6 @@ import {
   useCameraPermission,
   useCodeScanner,
 } from 'react-native-vision-camera';
-import {RNHoleView} from 'react-native-hole-view';
 function ScanQR() {
   const {hasPermission, requestPermission} = useCameraPermission();
   const [isRear, setIsRear] = useState(true);
@@ -52,64 +51,7 @@ function ScanQR() {
 
   return (
     <View style={styles.container}>
-      <Camera
-        style={[StyleSheet.absoluteFill, styles.camera]}
-        codeScanner={codeScanner}
-        device={device}
-        isActive={true}
-      />
-
-      {/* <Camera style={styles.camera} enableZoom codeScanner={codeScanner} /> */}
-      {/* <HoleView
-        style={styles.holeView}
-        width={200} // Adjust as needed
-        height={200} // Adjust as needed
-        color="rgba(0,0,0,0.5)"
-        innerColor="white"
-      /> */}
-      <RNHoleView
-        style={{
-          position: 'absolute',
-          width: 200,
-          height: 200,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-        }}
-        holes={[
-          {x: 0, y: 0, width: 200, height: 200, borderRadius: 6},
-        ]}></RNHoleView>
-      {/* {scannedData && (
-        <View style={styles.scannedData}>
-          <Text>Scanned Data: {scannedData[0].data}</Text>
-        </View>
-      )} */}
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          position: 'absolute',
-          bottom: 20,
-          right: 20,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          padding: 10,
-          borderRadius: 5,
-        }}>
-        <TouchableOpacity onPress={() => setIsRear(!isRear)}>
-          <Image
-            source={require('./assets/camera-rotate.png')} // Replace with your icon path
-            style={{
-              width: 30,
-              height: 30,
-              marginBottom: 10,
-              tintColor: 'white',
-            }}
-          />
-          <Text style={{fontSize: 20, color: 'white'}}>
-            {!isRear ? 'Rear' : 'Front'}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {latestScannedData && (
+      {latestScannedData ? (
         <View style={styles.resultContainer}>
           <Text style={styles.resultTitle}>Latest Scanned Code:</Text>
           <Text style={styles.resultText}>{latestScannedData}</Text>
@@ -128,6 +70,44 @@ function ScanQR() {
             <Text>Scan New</Text>
           </TouchableOpacity>
         </View>
+      ) : (
+        <>
+          <Camera
+            style={[StyleSheet.absoluteFill, styles.camera]}
+            codeScanner={codeScanner}
+            device={device}
+            enableZoomGestures={true}
+            isActive={true}
+          />
+
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: 20,
+              right: 20,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              padding: 10,
+              borderRadius: 5,
+            }}>
+            <TouchableOpacity onPress={() => setIsRear(!isRear)}>
+              <Image
+                source={require('./assets/camera-rotate.png')} // Replace with your icon path
+                style={{
+                  width: 30,
+                  height: 30,
+                  marginBottom: 10,
+                  tintColor: 'white',
+                }}
+              />
+              <Text style={{fontSize: 20, color: 'white'}}>
+                {!isRear ? 'Rear' : 'Front'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
       )}
     </View>
   );
